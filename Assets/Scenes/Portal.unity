@@ -183,6 +183,14 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8896340734877249906, guid: 4d6b6a8a76b66f14f9eb053720a820cf, type: 3}
+      propertyPath: playerCam
+      value: 
+      objectReference: {fileID: 1050416588}
+    - target: {fileID: 8896340734877249906, guid: 4d6b6a8a76b66f14f9eb053720a820cf, type: 3}
+      propertyPath: sensitivityX
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896340734877249906, guid: 4d6b6a8a76b66f14f9eb053720a820cf, type: 3}
       propertyPath: EdgeCheckTracingDepth
       value: 2
       objectReference: {fileID: 0}
@@ -523,3 +531,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acca3879558f1f743b6276ddd63f14aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1050416588 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5626452415777344228, guid: 4d6b6a8a76b66f14f9eb053720a820cf, type: 3}
+  m_PrefabInstance: {fileID: 123048868}
+  m_PrefabAsset: {fileID: 0}

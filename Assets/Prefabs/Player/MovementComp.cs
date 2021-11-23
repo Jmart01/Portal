@@ -30,8 +30,14 @@ public class MovementComp : MonoBehaviour
     Quaternion PreviousWorldRot;
     Quaternion PreviousFloorLocalRot;
 
-    private float rotationX = 0f;
-    private Vector2 startingRotation = new Vector2(0,0);
+    private float mouseX;
+    private float mouseY;
+    [SerializeField] float sensitivityX = 0.01f;
+    [SerializeField] float sensitivityY = 0.01f;
+    private float xRotation = 0;
+    [SerializeField] float xClamp = 85f;
+    [SerializeField] Transform playerCam;
+    
     public void SetMovementInput(Vector2 inputVal)
     {
         Debug.Log(inputVal);
@@ -195,45 +201,39 @@ public class MovementComp : MonoBehaviour
         return new Vector3(-MoveInput.y, 0f, MoveInput.x).normalized;
     }
 
-    public Vector3 GetPlayerDesiredLookDir()
+   /* public Vector3 GetPlayerDesiredLookDir()
     {
         //this needs work
-        Ray CursorToWorldRay = Camera.main.ScreenPointToRay(CursorPosition);
-        if (startingRotation == null)
-        {
-            startingRotation = transform.localRotation.eulerAngles;
-        }
 
-        Vector2 deltaInput = CursorPosition;
-        startingRotation.x += deltaInput.x * Time.deltaTime;
-        startingRotation.y += deltaInput.y * Time.deltaTime;
-        startingRotation.y = Mathf.Clamp(startingRotation.y, -80f, 80);
-        /*float height = CursorToWorldRay.origin.y - transform.position.y;
+        //Ray CursorToWorldRay = Camera.main.ScreenPointToRay(CursorPosition);
+        float height = CursorToWorldRay.origin.y - transform.position.y;
         float length = height / Vector3.Dot(new Vector3(0, -1, 0), CursorToWorldRay.direction);
         Vector3 LookAtLoc = CursorToWorldRay.origin + CursorToWorldRay.direction * length;
         Vector3 LootAtDir = (LookAtLoc - transform.position).normalized;
-        */
-        //return LootAtDir;
-    }
+        
+        return LootAtDir;
+    }*/
+
+   public void RecieveInput(Vector2 mouseInput)
+   {
+       mouseX = mouseInput.x * sensitivityX;
+       mouseY = mouseInput.y * sensitivityY;
+       transform.Rotate(Vector3.up, mouseX * Time.deltaTime);
+       xRotation -= mouseY;
+       xRotation = Mathf.Clamp(xRotation, -xClamp, xClamp);
+       Vector3 targetRot = transform.eulerAngles;
+       targetRot.x = xRotation;
+       playerCam.eulerAngles = targetRot;
+   }
 
     void UpdateRotation()
     {
-        if (isClimbing)
-        {
-            return;
-        }
-        Vector3 PlayerDesiredDir = GetPlayerDesiredLookDir();
-        if (PlayerDesiredDir.magnitude == 0)
-        {
-            PlayerDesiredDir = transform.forward;
-        }
-
-        Quaternion DesiredRotation = Quaternion.LookRotation(PlayerDesiredDir, Vector3.up);
-        transform.rotation = Quaternion.Lerp(transform.rotation, DesiredRotation, Time.deltaTime * rotationSpeed);
+        
     }
 
     public void SetCursorPosition(Vector2 readValue)
     {
         CursorPosition = readValue;
+        RecieveInput(CursorPosition);
     }
 }
