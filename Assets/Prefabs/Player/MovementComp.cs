@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 
 public class MovementComp : MonoBehaviour
 {
@@ -15,7 +17,7 @@ public class MovementComp : MonoBehaviour
     [SerializeField] Transform GroundCheck;
     [SerializeField] float GroundCheckRadius = 0.1f;
     [SerializeField] LayerMask GroundLayerMask;
-
+    [SerializeField] private Transform CameraPitch;
     bool isClimbing;
     Vector3 LadderDir;
     Vector2 MoveInput;
@@ -36,8 +38,8 @@ public class MovementComp : MonoBehaviour
     [SerializeField] float sensitivityY = 0.01f;
     private float xRotation = 0;
     [SerializeField] float xClamp = 85f;
-    [SerializeField] Transform playerCam;
-    
+
+    private float pitch = 0.0f;
     public void SetMovementInput(Vector2 inputVal)
     {
         Debug.Log(inputVal);
@@ -167,68 +169,33 @@ public class MovementComp : MonoBehaviour
 
     private void CaculateWalkingVelocity()
     {
-        if (IsOnGround())
-        {
-            Velocity.y = -0.2f;
-        }
-
-        Velocity.x = GetPlayerDesiredMoveDir().x * WalkingSpeed;
-        Velocity.z = GetPlayerDesiredMoveDir().z * WalkingSpeed;
-        Velocity.y += Gravity * Time.deltaTime;
-
-
-        Vector3 PosXTracePos = transform.position + new Vector3(EdgeCheckTracingDistance, 0.5f, 0f);
-        Vector3 NegXTracePos = transform.position + new Vector3(-EdgeCheckTracingDistance, 0.5f, 0f);
-        Vector3 PosZTracePos = transform.position + new Vector3(0f, 0.5f, EdgeCheckTracingDistance);
-        Vector3 NegZTracePos = transform.position + new Vector3(0f, 0.5f, -EdgeCheckTracingDistance);
-
-        bool CanGoPosX = Physics.Raycast(PosXTracePos, Vector3.down, EdgeCheckTracingDepth, GroundLayerMask);
-        bool CanGoNegX = Physics.Raycast(NegXTracePos, Vector3.down, EdgeCheckTracingDepth, GroundLayerMask);
-        bool CanGoPosZ = Physics.Raycast(PosZTracePos, Vector3.down, EdgeCheckTracingDepth, GroundLayerMask);
-        bool CanGoNegZ = Physics.Raycast(NegZTracePos, Vector3.down, EdgeCheckTracingDepth, GroundLayerMask);
-
-        float xMin = CanGoNegX ? float.MinValue : 0f;
-        float xMax = CanGoPosX ? float.MaxValue : 0f;
-        float zMin = CanGoNegZ ? float.MinValue : 0f;
-        float zMax = CanGoPosZ ? float.MaxValue : 0f;
-
-        Velocity.x = Mathf.Clamp(Velocity.x, xMin, xMax);
-        Velocity.z = Mathf.Clamp(Velocity.z, zMin, zMax);
+        Velocity =(-MoveInput.y * transform.right + MoveInput.x * transform.forward).normalized * WalkingSpeed;
     }
 
     public Vector3 GetPlayerDesiredMoveDir()
     {
         return new Vector3(-MoveInput.y, 0f, MoveInput.x).normalized;
     }
-
-   /* public Vector3 GetPlayerDesiredLookDir()
-    {
-        //this needs work
-
-        //Ray CursorToWorldRay = Camera.main.ScreenPointToRay(CursorPosition);
-        float height = CursorToWorldRay.origin.y - transform.position.y;
-        float length = height / Vector3.Dot(new Vector3(0, -1, 0), CursorToWorldRay.direction);
-        Vector3 LookAtLoc = CursorToWorldRay.origin + CursorToWorldRay.direction * length;
-        Vector3 LootAtDir = (LookAtLoc - transform.position).normalized;
-        
-        return LootAtDir;
-    }*/
-
+    
    public void RecieveInput(Vector2 mouseInput)
    {
        mouseX = mouseInput.x * sensitivityX;
-       mouseY = mouseInput.y * sensitivityY;
+       mouseY = -mouseInput.y * sensitivityY;
        transform.Rotate(Vector3.up, mouseX * Time.deltaTime);
-       xRotation -= mouseY;
-       xRotation = Mathf.Clamp(xRotation, -xClamp, xClamp);
-       Vector3 targetRot = transform.eulerAngles;
-       targetRot.x = xRotation;
-       playerCam.eulerAngles = targetRot;
+
+       pitch = Mathf.Clamp(pitch + mouseY * Time.deltaTime, -80f, 80f);
+       CameraPitch.transform.localEulerAngles = new Vector3(0,0,pitch);
+
    }
 
     void UpdateRotation()
     {
         
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(CameraPitch.position, transform.forward*1000);
     }
 
     public void SetCursorPosition(Vector2 readValue)
