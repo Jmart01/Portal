@@ -1,13 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DarkDemon;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Object = System.Object;
 
 public class Player : MonoBehaviour
 {
     private MovementComp _movementComp;
     private InputActions _inputActions;
+    [SerializeField] Camera mainCamera;
+    [SerializeField] GameObject portalA;
+    [SerializeField] GameObject portalB;
+    Portal _portal;
 
 
     private void Awake()
@@ -28,21 +34,24 @@ public class Player : MonoBehaviour
     void Start()
     {
         _movementComp = GetComponent<MovementComp>();
-
+        _portal = FindObjectOfType<Portal>();
         _inputActions.Gameplay.Movement.performed += MovementOnPerformed;
         _inputActions.Gameplay.Movement.canceled += MovementOnCanceled;
         _inputActions.Gameplay.CursorPosition.performed += CursorPostionOnPerformed;
         _inputActions.Gameplay.SpawnPortalA.performed += SpawnPortalA;
         _inputActions.Gameplay.SpawnPortalB.performed += SpawnPortalB;
+        Cursor.visible = false;
     }
 
     private void SpawnPortalA(InputAction.CallbackContext obj)
     {
         //raycast the portal where the player is looking
+        //GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        FireTowards(portalA,"portalA");
     }
     private void SpawnPortalB(InputAction.CallbackContext obj)
     {
-        throw new NotImplementedException();
+        FireTowards(portalB,"portalB");
     }
     
     private void CursorPostionOnPerformed(InputAction.CallbackContext obj)
@@ -58,5 +67,29 @@ public class Player : MonoBehaviour
     private void MovementOnPerformed(InputAction.CallbackContext obj)
     {
         _movementComp.SetMovementInput(obj.ReadValue<Vector2>());
+    }
+
+    private void FireTowards(GameObject thingToSpawn, string colliderToPop)
+    {
+        Vector3 rayOrigin = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
+        RaycastHit hit;
+        if (Physics.Raycast(rayOrigin, mainCamera.transform.forward, out hit))
+        {
+            GameObject portalableSurface = GameObject.FindWithTag("portalableSurface");
+            if (hit.collider.gameObject == portalableSurface)
+            {
+                GameObject newPortal = Instantiate(thingToSpawn, hit.point, Quaternion.identity);
+                newPortal.transform.parent = FindObjectOfType<Portal>().gameObject.transform;
+                switch (colliderToPop)
+                {
+                    case "portalA":
+                        _portal.ColliderA = newPortal.GetComponent<Collider>();
+                        break;
+                    case "portalB":
+                        _portal.ColliderB = newPortal.GetComponent<Collider>();
+                        break;
+                }
+            }
+        }
     }
 }

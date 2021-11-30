@@ -138,18 +138,20 @@ namespace DarkDemon
 
 		private void CameraControl()
 		{
-			Vector3 offset = PlayerCamera.transform.position - OtherPortalPart.position;
+			if (OtherPortalPart != null)
+			{
+				Vector3 offset = PlayerCamera.transform.position - OtherPortalPart.position;
 			
-			ThisCamera.transform.position = PortalPart.position + offset;
+				ThisCamera.transform.position = PortalPart.position + offset;
 			
-			float angle = Quaternion.Angle(PortalPart.rotation, OtherPortalPart.rotation);
+				float angle = Quaternion.Angle(PortalPart.rotation, OtherPortalPart.rotation);
 			
-			Quaternion toQuaternion = Quaternion.AngleAxis(angle, Vector3.up);
+				Quaternion toQuaternion = Quaternion.AngleAxis(angle, Vector3.up);
 			
-			Vector3 dir = toQuaternion * PlayerCamera.transform.forward;
+				Vector3 dir = toQuaternion * PlayerCamera.transform.forward;
 			
-			ThisCamera.transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
-
+				ThisCamera.transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+			}
 		}
 
 		void OnTriggerEnter(Collider other)

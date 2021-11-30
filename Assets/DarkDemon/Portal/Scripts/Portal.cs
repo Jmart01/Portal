@@ -37,17 +37,18 @@ namespace DarkDemon
 
         void RenderTexture(Camera cam, Transform screen)
         {
+            if (cam != null)
+            {
+                cam.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
 
-            cam.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
+                Material material = new Material(ScreenCut);
 
-            Material material = new Material(ScreenCut);
+                MeshRenderer renderer = screen.GetComponent<MeshRenderer>();
 
-            MeshRenderer renderer = screen.GetComponent<MeshRenderer>();
+                material.mainTexture = cam.targetTexture;
 
-            material.mainTexture = cam.targetTexture;
-
-            renderer.sharedMaterial = material;
-
+                renderer.sharedMaterial = material;
+            }
         }
 
         private void PlayerSetUp()
@@ -151,8 +152,8 @@ namespace DarkDemon
         public Camera CameraB { get; private set; }
         public Transform ScreenA { get; private set; }
         public Transform ScreenB { get; private set; }
-        public Collider ColliderA { get; private set; }
-        public Collider ColliderB { get; private set; }
+        public Collider ColliderA { get;  set; }
+        public Collider ColliderB { get;  set; }
         public Transform PortalA { get; private set; }
         public Transform PortalB { get; private set; }
         public Transform GetPlayer { get { return Player; } }
