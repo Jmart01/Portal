@@ -33,6 +33,22 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""SpawnPortalA"",
+                    ""type"": ""Button"",
+                    ""id"": ""556bc0f6-8022-48ad-a864-a60d091599c6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SpawnPortalB"",
+                    ""type"": ""Button"",
+                    ""id"": ""5544da99-8684-47d9-8637-708110e63450"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -101,6 +117,28 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""action"": ""CursorPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""45183eb8-2a16-43a7-8d3c-dc640ecd7eaa"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpawnPortalA"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""80678f51-8ff4-40eb-89a5-79eea22a6554"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpawnPortalB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -111,6 +149,8 @@ public class @InputActions : IInputActionCollection, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
         m_Gameplay_CursorPosition = m_Gameplay.FindAction("CursorPosition", throwIfNotFound: true);
+        m_Gameplay_SpawnPortalA = m_Gameplay.FindAction("SpawnPortalA", throwIfNotFound: true);
+        m_Gameplay_SpawnPortalB = m_Gameplay.FindAction("SpawnPortalB", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -162,12 +202,16 @@ public class @InputActions : IInputActionCollection, IDisposable
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Movement;
     private readonly InputAction m_Gameplay_CursorPosition;
+    private readonly InputAction m_Gameplay_SpawnPortalA;
+    private readonly InputAction m_Gameplay_SpawnPortalB;
     public struct GameplayActions
     {
         private @InputActions m_Wrapper;
         public GameplayActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
         public InputAction @CursorPosition => m_Wrapper.m_Gameplay_CursorPosition;
+        public InputAction @SpawnPortalA => m_Wrapper.m_Gameplay_SpawnPortalA;
+        public InputAction @SpawnPortalB => m_Wrapper.m_Gameplay_SpawnPortalB;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -183,6 +227,12 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @CursorPosition.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCursorPosition;
                 @CursorPosition.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCursorPosition;
                 @CursorPosition.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCursorPosition;
+                @SpawnPortalA.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpawnPortalA;
+                @SpawnPortalA.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpawnPortalA;
+                @SpawnPortalA.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpawnPortalA;
+                @SpawnPortalB.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpawnPortalB;
+                @SpawnPortalB.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpawnPortalB;
+                @SpawnPortalB.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpawnPortalB;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -193,6 +243,12 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @CursorPosition.started += instance.OnCursorPosition;
                 @CursorPosition.performed += instance.OnCursorPosition;
                 @CursorPosition.canceled += instance.OnCursorPosition;
+                @SpawnPortalA.started += instance.OnSpawnPortalA;
+                @SpawnPortalA.performed += instance.OnSpawnPortalA;
+                @SpawnPortalA.canceled += instance.OnSpawnPortalA;
+                @SpawnPortalB.started += instance.OnSpawnPortalB;
+                @SpawnPortalB.performed += instance.OnSpawnPortalB;
+                @SpawnPortalB.canceled += instance.OnSpawnPortalB;
             }
         }
     }
@@ -201,5 +257,7 @@ public class @InputActions : IInputActionCollection, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnCursorPosition(InputAction.CallbackContext context);
+        void OnSpawnPortalA(InputAction.CallbackContext context);
+        void OnSpawnPortalB(InputAction.CallbackContext context);
     }
 }

@@ -32,8 +32,19 @@ public class Player : MonoBehaviour
         _inputActions.Gameplay.Movement.performed += MovementOnPerformed;
         _inputActions.Gameplay.Movement.canceled += MovementOnCanceled;
         _inputActions.Gameplay.CursorPosition.performed += CursorPostionOnPerformed;
+        _inputActions.Gameplay.SpawnPortalA.performed += SpawnPortalA;
+        _inputActions.Gameplay.SpawnPortalB.performed += SpawnPortalB;
     }
 
+    private void SpawnPortalA(InputAction.CallbackContext obj)
+    {
+        //raycast the portal where the player is looking
+    }
+    private void SpawnPortalB(InputAction.CallbackContext obj)
+    {
+        throw new NotImplementedException();
+    }
+    
     private void CursorPostionOnPerformed(InputAction.CallbackContext obj)
     {
         _movementComp.SetCursorPosition(obj.ReadValue<Vector2>());
@@ -47,11 +58,5 @@ public class Player : MonoBehaviour
     private void MovementOnPerformed(InputAction.CallbackContext obj)
     {
         _movementComp.SetMovementInput(obj.ReadValue<Vector2>());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

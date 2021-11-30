@@ -134,7 +134,6 @@ public class MovementComp : MonoBehaviour
         CheckFloor();
         FollowFloor();
         characterController.Move(Velocity * Time.deltaTime);
-        UpdateRotation();
 
         SnapShotPostionAndRotation();
     }
@@ -188,12 +187,7 @@ public class MovementComp : MonoBehaviour
 
    }
 
-    void UpdateRotation()
-    {
-        
-    }
-
-    private void OnDrawGizmos()
+   private void OnDrawGizmos()
     {
         Gizmos.DrawLine(CameraPitch.position, transform.forward*1000);
     }
