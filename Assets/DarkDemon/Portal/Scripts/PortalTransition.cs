@@ -116,6 +116,24 @@ namespace DarkDemon
 				{
 					vel = ObjectToTeleport.GetComponent<Rigidbody>().velocity;
 				}
+				PortalParts.PortalPart thisPart = GetComponent<PortalParts>().GetPortalPart;
+				if (thisPart == PortalParts.PortalPart.ColliderA)
+				{
+					OtherCollider = Portal.ColliderB;
+				}
+				else
+				{
+					OtherCollider = Portal.ColliderA;
+				}
+
+				if (PortalPart == Portal.PortalA)
+				{
+					OtherPortalPart = Portal.PortalB;
+				}
+				else
+				{
+					OtherPortalPart = Portal.PortalA;
+				}
 				float rotationDiff = -Quaternion.Angle(transform.rotation, OtherCollider.transform.rotation);
 				rotationDiff += 180;
 				ObjectToTeleport.transform.Rotate(Vector3.up, rotationDiff);

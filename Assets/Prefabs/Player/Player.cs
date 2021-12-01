@@ -75,18 +75,17 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(rayOrigin, mainCamera.transform.forward, out hit))
         {
-            GameObject portalableSurface = GameObject.FindWithTag("portalableSurface");
-            if (hit.collider.gameObject == portalableSurface)
+            if(hit.collider.gameObject.CompareTag("portalableSurface"))
             {
-                GameObject newPortal = Instantiate(thingToSpawn, hit.point, Quaternion.identity);
+                GameObject newPortal = Instantiate(thingToSpawn, hit.point,Quaternion.LookRotation(hit.normal));
                 newPortal.transform.parent = FindObjectOfType<Portal>().gameObject.transform;
                 switch (colliderToPop)
                 {
                     case "portalA":
-                        _portal.ColliderA = newPortal.GetComponent<Collider>();
+                        _portal.ColliderA = newPortal.GetComponentInChildren<Collider>();
                         break;
                     case "portalB":
-                        _portal.ColliderB = newPortal.GetComponent<Collider>();
+                        _portal.ColliderB = newPortal.GetComponentInChildren<Collider>();
                         break;
                 }
             }
