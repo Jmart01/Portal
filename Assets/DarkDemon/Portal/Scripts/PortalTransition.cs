@@ -55,9 +55,7 @@ namespace DarkDemon
 			PlayerCamera = Player.GetComponentInChildren<Camera>();
 
 			PortalPart = transform.parent;
-
-
-
+			
 			if (thisPart == PortalParts.PortalPart.ColliderA)
 			{
 				OtherCollider = Portal.ColliderB;
@@ -66,8 +64,6 @@ namespace DarkDemon
 			{
 				OtherCollider = Portal.ColliderA;
 			}
-
-
 
 			if (PortalPart == Portal.PortalA)
 			{
@@ -88,19 +84,16 @@ namespace DarkDemon
 		void Update()
 		{
 			CameraControl();
-
+			
 			if (PlayerCrossedPortal)
 			{
 				if (ObjectToTeleport)
 				{
 					Teleport();
 				}
-
 			}
-
 		}
-
-
+		
 		private void Teleport()
 		{
 			Vector3 portalToObject = ObjectToTeleport.transform.position - transform.position;
@@ -116,6 +109,11 @@ namespace DarkDemon
 				{
 					vel = ObjectToTeleport.GetComponent<Rigidbody>().velocity;
 				}
+				else if (ObjectToTeleport.GetComponent<CharacterController>())
+				{
+					vel = ObjectToTeleport.GetComponent<CharacterController>().velocity;
+				}
+				
 				PortalParts.PortalPart thisPart = GetComponent<PortalParts>().GetPortalPart;
 				if (thisPart == PortalParts.PortalPart.ColliderA)
 				{
@@ -135,7 +133,7 @@ namespace DarkDemon
 					OtherPortalPart = Portal.PortalA;
 				}
 				float rotationDiff = -Quaternion.Angle(transform.rotation, OtherCollider.transform.rotation);
-				rotationDiff += 180;
+				rotationDiff += 0;
 				ObjectToTeleport.transform.Rotate(Vector3.up, rotationDiff);
 				Vector3 positionOffset = Quaternion.Euler(0f, rotationDiff, 0f) * portalToObject;
 
@@ -146,14 +144,11 @@ namespace DarkDemon
 					ObjectToTeleport.GetComponent<Rigidbody>().velocity = vel;
 				}
 
-
 				PlayerCrossedPortal = false;
 				ObjectToTeleport = null;
-
 			}
 		}
-
-
+		
 		private void CameraControl()
 		{
 			if (OtherPortalPart != null)
@@ -178,24 +173,16 @@ namespace DarkDemon
 			{
 				PlayerCrossedPortal = true;
 				ObjectToTeleport = other.transform;
-
 			}
-			
 		}
-
-
+		
 		void OnTriggerExit(Collider other)
 		{
-
 			if ((other == PlayerCollider) || (other.GetComponent<Rigidbody>()))
 			{
 				PlayerCrossedPortal = false;
 				ObjectToTeleport = null;
 			}
-
 		}
-
-		
 	}
-
 }

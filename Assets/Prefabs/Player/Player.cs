@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
         {
             if(hit.collider.gameObject.CompareTag("portalableSurface"))
             {
-                GameObject newPortal = Instantiate(thingToSpawn, hit.point,Quaternion.LookRotation(-hit.normal));
+                GameObject newPortal = Instantiate(thingToSpawn, hit.point,Quaternion.LookRotation(hit.normal));
                 newPortal.transform.parent = FindObjectOfType<Portal>().gameObject.transform;
                 switch (colliderToPop)
                 {
@@ -88,19 +88,22 @@ public class Player : MonoBehaviour
                         {
                             Destroy(_activePortalA);
                         }
-                        _portal.ColliderA = newPortal.GetComponentInChildren<Collider>();
+                        /*_portal.ColliderA = newPortal.GetComponentInChildren<Collider>();
                         _portal.CameraA = newPortal.GetComponentInChildren<Camera>();
-                        _portal.ScreenA = newPortal.GetComponentInChildren<Transform>();
+                        _portal.ScreenA = newPortal.GetComponentInChildren<Transform>();*/
+                        _portal.InitialSetUp();
                         _activePortalA = newPortal;
                         break;
                     case "portalB":
                         if (_activePortalB != null)
                         {
                             Destroy(_activePortalB);
+                            _portal.SetIsMaterialsCreated = false;
                         }
-                        _portal.ColliderB = newPortal.GetComponentInChildren<Collider>();
+                        /*_portal.ColliderB = newPortal.GetComponentInChildren<Collider>();
                         _portal.CameraB = newPortal.GetComponentInChildren<Camera>();
-                        _portal.ScreenB = newPortal.GetComponentInChildren<Transform>();
+                        _portal.ScreenB = newPortal.GetComponentInChildren<Transform>();*/
+                        _portal.InitialSetUp();
                         _activePortalB = newPortal;
                         break;
                     }

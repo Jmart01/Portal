@@ -27,11 +27,13 @@ namespace DarkDemon
         private void Update()
         {
             if (IsMaterialsCreated) return;
-
-            RenderTexture(CameraA, ScreenB);
-            RenderTexture(CameraB, ScreenA);
+            if (CameraA != null && CameraB != null && ScreenA != null && ScreenB != null)
+            {
+                RenderTexture(CameraA, ScreenB);
+                RenderTexture(CameraB, ScreenA);
             
-            IsMaterialsCreated = true;
+                IsMaterialsCreated = true;
+            }
         }
 
 
@@ -159,7 +161,10 @@ namespace DarkDemon
         public Transform GetPlayer { get { return Player; } }
         public Transform SetPlayer { set { Player = value; } }
 
-        
+        public bool SetIsMaterialsCreated
+        {
+            set { IsMaterialsCreated = value; }
+        }
 
     }
 

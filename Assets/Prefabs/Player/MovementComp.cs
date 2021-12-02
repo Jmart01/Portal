@@ -36,7 +36,6 @@ public class MovementComp : MonoBehaviour
     private float mouseY;
     [SerializeField] float sensitivityX = 0.01f;
     [SerializeField] float sensitivityY = 0.01f;
-    private float xRotation = 0;
     [SerializeField] float xClamp = 85f;
 
     private float pitch = 0.0f;
@@ -128,6 +127,11 @@ public class MovementComp : MonoBehaviour
         else
         {
             CaculateWalkingVelocity();
+            
+            if (IsOnGround() == false)
+            {
+                Velocity.y += Gravity*Time.deltaTime;
+            }
         }
 
         CheckFloor();
