@@ -148,10 +148,10 @@ namespace DarkDemon
             }
         }
 
-        public Camera CameraA { get; private set; }
-        public Camera CameraB { get; private set; }
-        public Transform ScreenA { get; private set; }
-        public Transform ScreenB { get; private set; }
+        public Camera CameraA { get; set; }
+        public Camera CameraB { get; set; }
+        public Transform ScreenA { get; set; }
+        public Transform ScreenB { get; set; }
         public Collider ColliderA { get;  set; }
         public Collider ColliderB { get;  set; }
         public Transform PortalA { get; private set; }

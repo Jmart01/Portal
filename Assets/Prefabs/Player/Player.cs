@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField] Camera mainCamera;
     [SerializeField] GameObject portalA;
     [SerializeField] GameObject portalB;
+    private GameObject _activePortalA;
+    private GameObject _activePortalB;
     Portal _portal;
 
 
@@ -77,17 +79,31 @@ public class Player : MonoBehaviour
         {
             if(hit.collider.gameObject.CompareTag("portalableSurface"))
             {
-                GameObject newPortal = Instantiate(thingToSpawn, hit.point,Quaternion.LookRotation(hit.normal));
+                GameObject newPortal = Instantiate(thingToSpawn, hit.point,Quaternion.LookRotation(-hit.normal));
                 newPortal.transform.parent = FindObjectOfType<Portal>().gameObject.transform;
                 switch (colliderToPop)
                 {
                     case "portalA":
+                        if (_activePortalA != null)
+                        {
+                            Destroy(_activePortalA);
+                        }
                         _portal.ColliderA = newPortal.GetComponentInChildren<Collider>();
+                        _portal.CameraA = newPortal.GetComponentInChildren<Camera>();
+                        _portal.ScreenA = newPortal.GetComponentInChildren<Transform>();
+                        _activePortalA = newPortal;
                         break;
                     case "portalB":
+                        if (_activePortalB != null)
+                        {
+                            Destroy(_activePortalB);
+                        }
                         _portal.ColliderB = newPortal.GetComponentInChildren<Collider>();
+                        _portal.CameraB = newPortal.GetComponentInChildren<Camera>();
+                        _portal.ScreenB = newPortal.GetComponentInChildren<Transform>();
+                        _activePortalB = newPortal;
                         break;
-                }
+                    }
             }
         }
     }

@@ -42,7 +42,6 @@ public class MovementComp : MonoBehaviour
     private float pitch = 0.0f;
     public void SetMovementInput(Vector2 inputVal)
     {
-        Debug.Log(inputVal);
         MoveInput = inputVal;
     }
     public void ClearVerticalVelocity()
