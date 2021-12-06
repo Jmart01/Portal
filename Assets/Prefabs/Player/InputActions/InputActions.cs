@@ -49,6 +49,14 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""3d40e52d-7afb-4c46-864e-859d21009427"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -139,6 +147,17 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""action"": ""SpawnPortalB"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eb1a3745-5af1-4497-b1a0-ea382f77d09c"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -151,6 +170,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         m_Gameplay_CursorPosition = m_Gameplay.FindAction("CursorPosition", throwIfNotFound: true);
         m_Gameplay_SpawnPortalA = m_Gameplay.FindAction("SpawnPortalA", throwIfNotFound: true);
         m_Gameplay_SpawnPortalB = m_Gameplay.FindAction("SpawnPortalB", throwIfNotFound: true);
+        m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -204,6 +224,7 @@ public class @InputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_CursorPosition;
     private readonly InputAction m_Gameplay_SpawnPortalA;
     private readonly InputAction m_Gameplay_SpawnPortalB;
+    private readonly InputAction m_Gameplay_Interact;
     public struct GameplayActions
     {
         private @InputActions m_Wrapper;
@@ -212,6 +233,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         public InputAction @CursorPosition => m_Wrapper.m_Gameplay_CursorPosition;
         public InputAction @SpawnPortalA => m_Wrapper.m_Gameplay_SpawnPortalA;
         public InputAction @SpawnPortalB => m_Wrapper.m_Gameplay_SpawnPortalB;
+        public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -233,6 +255,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @SpawnPortalB.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpawnPortalB;
                 @SpawnPortalB.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpawnPortalB;
                 @SpawnPortalB.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpawnPortalB;
+                @Interact.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -249,6 +274,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @SpawnPortalB.started += instance.OnSpawnPortalB;
                 @SpawnPortalB.performed += instance.OnSpawnPortalB;
                 @SpawnPortalB.canceled += instance.OnSpawnPortalB;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -259,5 +287,6 @@ public class @InputActions : IInputActionCollection, IDisposable
         void OnCursorPosition(InputAction.CallbackContext context);
         void OnSpawnPortalA(InputAction.CallbackContext context);
         void OnSpawnPortalB(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

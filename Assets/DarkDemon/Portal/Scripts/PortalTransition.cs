@@ -162,8 +162,11 @@ namespace DarkDemon
 				Quaternion toQuaternion = Quaternion.AngleAxis(angle, Vector3.up);
 			
 				Vector3 dir = toQuaternion * PlayerCamera.transform.forward;
+				Quaternion fix = new Quaternion(0f, 180f, 0f,0f);
+				
 			
-				ThisCamera.transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+				ThisCamera.transform.rotation = Quaternion.LookRotation(dir, Vector3.up) * fix;
+				
 			}
 		}
 

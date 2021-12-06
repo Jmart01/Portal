@@ -16,7 +16,12 @@ public class Player : MonoBehaviour
     private GameObject _activePortalA;
     private GameObject _activePortalB;
     Portal _portal;
+    [SerializeField] Transform PickUpSocketTrans;
 
+    public Transform GetPickUpSocketTransform()
+    {
+        return PickUpSocketTrans;
+    }
 
     private void Awake()
     {
@@ -42,6 +47,7 @@ public class Player : MonoBehaviour
         _inputActions.Gameplay.CursorPosition.performed += CursorPostionOnPerformed;
         _inputActions.Gameplay.SpawnPortalA.performed += SpawnPortalA;
         _inputActions.Gameplay.SpawnPortalB.performed += SpawnPortalB;
+        _inputActions.Gameplay.Interact.performed += Interact;
         Cursor.visible = false;
     }
 
@@ -108,6 +114,15 @@ public class Player : MonoBehaviour
                         break;
                     }
             }
+        }
+    }
+
+    void Interact(InputAction.CallbackContext ctx)
+    {
+        InteractComponent interactComp = GetComponentInChildren<InteractComponent>();
+        if (interactComp != null)
+        {
+            interactComp.Interact();
         }
     }
 }
