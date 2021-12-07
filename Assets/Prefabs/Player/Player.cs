@@ -10,13 +10,17 @@ public class Player : MonoBehaviour
 {
     private MovementComp _movementComp;
     private InputActions _inputActions;
+    private InteractComponent _interactComp;
+    
     [SerializeField] Camera mainCamera;
     [SerializeField] GameObject portalA;
     [SerializeField] GameObject portalB;
     private GameObject _activePortalA;
     private GameObject _activePortalB;
     Portal _portal;
+    
     [SerializeField] Transform PickUpSocketTrans;
+    [SerializeField] float InteractRadius = 2.4f;
 
     public Transform GetPickUpSocketTransform()
     {
@@ -42,6 +46,7 @@ public class Player : MonoBehaviour
     {
         _movementComp = GetComponent<MovementComp>();
         _portal = FindObjectOfType<Portal>();
+        _interactComp = GetComponent<InteractComponent>();
         _inputActions.Gameplay.Movement.performed += MovementOnPerformed;
         _inputActions.Gameplay.Movement.canceled += MovementOnCanceled;
         _inputActions.Gameplay.CursorPosition.performed += CursorPostionOnPerformed;
@@ -119,10 +124,22 @@ public class Player : MonoBehaviour
 
     void Interact(InputAction.CallbackContext ctx)
     {
-        InteractComponent interactComp = GetComponentInChildren<InteractComponent>();
-        if (interactComp != null)
+        if (_interactComp != null)
         {
-            interactComp.Interact();
+            Vector3 rayOrigin = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
+            RaycastHit hit;
+            if (Physics.Raycast(rayOrigin, mainCamera.transform.forward, out hit))
+            {
+                Interactable otherAsInteractable = hit.collider.GetComponent<Interactable>();
+                if (otherAsInteractable)
+                {
+                    float DistanceToInteractable = Vector3.Distance(hit.point, this.transform.position);
+                    if (DistanceToInteractable < InteractRadius)
+                    {
+                        otherAsInteractable.Interact(gameObject);
+                    }
+                }
+            }
         }
     }
 }

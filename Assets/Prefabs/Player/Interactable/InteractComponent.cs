@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InteractComponent : MonoBehaviour
 {
     List<Interactable> interactables = new List<Interactable>();
+
+    [SerializeField] float InteractRadius = 2.4f;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +17,16 @@ public class InteractComponent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        /*Interactable[] otherAsInteractable = FindObjectsOfType<Interactable>();}
+        float DistanceFromPlayer = Vector3.Distance(otherAsInteractable.transform.position, this.gameObject.transform.position);
+        if (DistanceFromPlayer < InteractRadius && !interactables.Contains(otherAsInteractable))
+        {
+            interactables.Add(otherAsInteractable);
+        }
+        else if (DistanceFromPlayer > InteractRadius && interactables.Contains(otherAsInteractable))
+        {
+            interactables.Remove(otherAsInteractable);
+        }*/
     }
 
     private void OnTriggerEnter(Collider other)

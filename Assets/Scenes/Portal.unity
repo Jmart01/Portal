@@ -299,6 +299,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -31.84}
+--- !u!1 &217650466 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3916766275133514568, guid: 4d6b6a8a76b66f14f9eb053720a820cf, type: 3}
+  m_PrefabInstance: {fileID: 2018947974}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &217650470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217650466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 428b8ad74f4934944a40a7daed0891b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractRadius: 2.4
 --- !u!1 &319193296
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,23 +1473,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8260c75f235d004bad0e15afd4cae78, type: 3}
---- !u!1 &1829218102 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4647661210431715823, guid: 4d6b6a8a76b66f14f9eb053720a820cf, type: 3}
-  m_PrefabInstance: {fileID: 2018947974}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1829218104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1829218102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 428b8ad74f4934944a40a7daed0891b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1862731852 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2385518445255480179, guid: d8dc6bc5d9c6a774eaac7b94a7f3b153, type: 3}
@@ -1500,6 +1501,10 @@ PrefabInstance:
       propertyPath: PickUpSocketTrans
       value: 
       objectReference: {fileID: 1543868469}
+    - target: {fileID: 575364213310376858, guid: 4d6b6a8a76b66f14f9eb053720a820cf, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 575364213310376858, guid: 4d6b6a8a76b66f14f9eb053720a820cf, type: 3}
       propertyPath: m_IsTrigger
       value: 1
