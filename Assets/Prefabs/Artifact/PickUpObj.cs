@@ -52,7 +52,7 @@ public class PickUpObj : Interactable
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
             gameObject.GetComponent<Rigidbody>().useGravity = false;
             Vector3 DirFromInteractingGameObj = (transform.position - InteractingGameObject.transform.position).normalized;
-            Vector3 DirOfInteractingGameObj = InteractingGameObject.transform.forward;
+            Vector3 DirOfInteractingGameObj = -InteractingGameObject.transform.right;
             float Dot = Vector3.Dot(DirOfInteractingGameObj, DirFromInteractingGameObj);
             if (Dot > .5f)
             {

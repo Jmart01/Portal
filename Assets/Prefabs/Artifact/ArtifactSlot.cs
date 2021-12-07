@@ -17,7 +17,7 @@ public class ArtifactSlot : MonoBehaviour
     public void OnArtifactPlaced()
     {
         //platformToMove.MoveTo(platformToMove.EndTrans);
-        //Debug.Log("Artifact Placed");
+        Debug.Log("Artifact Placed");
         TogglingObject.GetComponent<Togglable>().ToggleOn();
     }
     public Transform GetSlotTrans()

@@ -9,20 +9,26 @@ public interface Togglable
 
 public class Door : MonoBehaviour, Togglable
 {
-    private DoorMoveComp _doorMoveComp;
+    private DoorMoveComp[] _doorMoveComp;
     void Start()
     {
-        _doorMoveComp = GetComponent<DoorMoveComp>();
+        _doorMoveComp = GetComponentsInChildren<DoorMoveComp>();
     }
 
     public void ToggleOn()
     {
-        _doorMoveComp.MoveTo(true);
+        for (int i = 0; i < _doorMoveComp.Length; i++)
+        {
+            _doorMoveComp[i].MoveTo(true);
+        }
     }
 
     public void ToggleOff()
     {
-        _doorMoveComp.MoveTo(false);
+        for (int i = 0; i < _doorMoveComp.Length; i++)
+        {
+            _doorMoveComp[i].MoveTo(false);
+        }
     }
 
 }

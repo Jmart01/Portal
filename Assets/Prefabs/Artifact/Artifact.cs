@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class Artifact : PickUpObj
     public override void PickedUpBy(GameObject PickerGameObject)
     {
         base.PickedUpBy(PickerGameObject);
+        Debug.Log($"Picked up by: {PickerGameObject}");
         if(CurrentSlot)
         {
             CurrentSlot.OnArtifactLeft();
@@ -46,5 +48,10 @@ public class Artifact : PickUpObj
             }
         }
         return null;
+    }
+
+    private void OnDrawGizmos()
+    {
+        
     }
 }
