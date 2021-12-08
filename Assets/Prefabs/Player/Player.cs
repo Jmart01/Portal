@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] Camera mainCamera;
     [SerializeField] GameObject portalA;
     [SerializeField] GameObject portalB;
+    [SerializeField] LayerMask InteractLayerMask;
     private GameObject _activePortalA;
     private GameObject _activePortalB;
     Portal _portal;
@@ -126,17 +127,21 @@ public class Player : MonoBehaviour
     {
         if (_interactComp != null)
         {
+            Debug.Log("I'm interacting");
             Vector3 rayOrigin = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
-            RaycastHit hit;
-            if (Physics.Raycast(rayOrigin, mainCamera.transform.forward, out hit))
+            Ray castRay = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+            if (Physics.Raycast(castRay, out RaycastHit hit, float.MaxValue, InteractLayerMask,
+                QueryTriggerInteraction.Collide))
             {
-                Interactable otherAsInteractable = hit.collider.GetComponent<Interactable>();
+                Interactable otherAsInteractable = hit.rigidbody.gameObject.GetComponent<Interactable>();
                 if (otherAsInteractable)
                 {
                     float DistanceToInteractable = Vector3.Distance(hit.point, this.transform.position);
                     if (DistanceToInteractable < InteractRadius)
                     {
+                        Debug.Log("Firing Interact");
                         otherAsInteractable.Interact(gameObject);
+                        
                     }
                 }
             }

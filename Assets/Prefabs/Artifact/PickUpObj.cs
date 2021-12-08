@@ -16,6 +16,12 @@ public class PickUpObj : Interactable
     {
         
     }
+
+    void SetCollisionToWorldEnabled(bool enabled)
+    {
+        gameObject.GetComponent<Collider>().isTrigger = !enabled;
+    }
+    
     public virtual void PickedUpBy(GameObject PickerGameObject)
     {
         Transform pickUpSocketTransform = PickerGameObject.transform;
@@ -24,6 +30,7 @@ public class PickUpObj : Interactable
         if(PickerAsPlayer != null)
         {
             pickUpSocketTransform = PickerAsPlayer.GetPickUpSocketTransform();
+            SetCollisionToWorldEnabled(false);
         }
 
         transform.rotation = pickUpSocketTransform.rotation;
@@ -33,6 +40,7 @@ public class PickUpObj : Interactable
     public virtual void DropItem()
     {
         gameObject.transform.parent = null;
+        SetCollisionToWorldEnabled(true);
         gameObject.GetComponent<Rigidbody>().isKinematic = false;
         gameObject.GetComponent<Rigidbody>().useGravity = true;
     }
@@ -49,6 +57,8 @@ public class PickUpObj : Interactable
         }*/
         if(transform.parent == null)
         {
+            Debug.Log("My parent is null");
+            gameObject.GetComponent<Collider>().enabled = true;
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
             gameObject.GetComponent<Rigidbody>().useGravity = false;
             Vector3 DirFromInteractingGameObj = (transform.position - InteractingGameObject.transform.position).normalized;
@@ -61,6 +71,7 @@ public class PickUpObj : Interactable
         }
         else
         {
+            Debug.Log("should drop item");
             DropItem();
         }
     }

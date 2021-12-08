@@ -296,9 +296,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WalkingSpeed: 5
-  rotationSpeed: 5
-  EdgeCheckTracingDistance: 0.8
-  EdgeCheckTracingDepth: 2
   GroundCheck: {fileID: 486971437177917643}
   GroundCheckRadius: 0.1
   GroundLayerMask:
@@ -307,7 +304,6 @@ MonoBehaviour:
   CameraPitch: {fileID: 6659937542957711681}
   sensitivityX: 0.5
   sensitivityY: 0.5
-  xClamp: 85
 --- !u!114 &994554119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,6 +319,9 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   portalA: {fileID: 0}
   portalB: {fileID: 0}
+  InteractLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
   PickUpSocketTrans: {fileID: 0}
   InteractRadius: 2.4
 --- !u!1 &4312728445290250250

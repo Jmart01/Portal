@@ -9,10 +9,7 @@ public class MovementComp : MonoBehaviour
 {
     [Header("Walking")]
     [SerializeField] float WalkingSpeed = 5f;
-    [SerializeField] float rotationSpeed = 5f;
-    [SerializeField] float EdgeCheckTracingDistance = 0.8f;
-    [SerializeField] float EdgeCheckTracingDepth = 1f;
-    
+
     [Header("Ground Check")]
     [SerializeField] Transform GroundCheck;
     [SerializeField] float GroundCheckRadius = 0.1f;
@@ -24,6 +21,7 @@ public class MovementComp : MonoBehaviour
     private Vector2 CursorPosition;
     Vector3 Velocity;
     float Gravity = -9.8f;
+    private float GravityMulti = 60f;
     CharacterController characterController;
 
     Transform currentFloor;
@@ -36,7 +34,7 @@ public class MovementComp : MonoBehaviour
     private float mouseY;
     [SerializeField] float sensitivityX = 0.01f;
     [SerializeField] float sensitivityY = 0.01f;
-    [SerializeField] float xClamp = 85f;
+    
 
     private float pitch = 0.0f;
     public void SetMovementInput(Vector2 inputVal)
@@ -130,7 +128,9 @@ public class MovementComp : MonoBehaviour
             
             if (IsOnGround() == false)
             {
-                Velocity.y += Gravity*Time.deltaTime;
+                Debug.Log(IsOnGround());
+                Velocity.y += Gravity*GravityMulti*Time.deltaTime;
+                Debug.Log(Velocity.y);
             }
         }
 

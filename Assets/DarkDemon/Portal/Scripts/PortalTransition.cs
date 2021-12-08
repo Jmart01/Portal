@@ -174,6 +174,10 @@ namespace DarkDemon
 		{
 			if ((other == PlayerCollider) || (other.GetComponent<Rigidbody>()))
 			{
+				if (other.GetComponent<PickUpObj>())
+				{
+					return;
+				}
 				PlayerCrossedPortal = true;
 				ObjectToTeleport = other.transform;
 			}
@@ -183,6 +187,10 @@ namespace DarkDemon
 		{
 			if ((other == PlayerCollider) || (other.GetComponent<Rigidbody>()))
 			{
+				if (other.GetComponent<PickUpObj>())
+				{
+					return;
+				}
 				PlayerCrossedPortal = false;
 				ObjectToTeleport = null;
 			}

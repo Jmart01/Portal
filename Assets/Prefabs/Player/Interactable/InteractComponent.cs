@@ -6,18 +6,11 @@ using UnityEngine;
 public class InteractComponent : MonoBehaviour
 {
     List<Interactable> interactables = new List<Interactable>();
-
-    [SerializeField] float InteractRadius = 2.4f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        /*Interactable[] otherAsInteractable = FindObjectsOfType<Interactable>();}
+        /*
+         THIS WAS MADE TO WORK AROUND THE SPHERE COLLIDER ISSUE, NOT FINISHED, USED A RAYCAST METHOD IN THE PLAYER CLASS AT THE VERY END
+         Interactable[] otherAsInteractable = FindObjectsOfType<Interactable>();}
         float DistanceFromPlayer = Vector3.Distance(otherAsInteractable.transform.position, this.gameObject.transform.position);
         if (DistanceFromPlayer < InteractRadius && !interactables.Contains(otherAsInteractable))
         {
@@ -28,7 +21,8 @@ public class InteractComponent : MonoBehaviour
             interactables.Remove(otherAsInteractable);
         }*/
     }
-
+/*
+ THIS WOULD WORK WITH A SPHERE COLLIDER BUT IT MESSED WITH THE PORTALS, DID NOT TELEPORT CORRECTLY
     private void OnTriggerEnter(Collider other)
     {
         Interactable otherAsInteractable = other.GetComponent<Interactable>();
@@ -54,7 +48,7 @@ public class InteractComponent : MonoBehaviour
             }
         }
     }
-
+*/
 
     public void Interact()
     {
