@@ -89,6 +89,7 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(rayOrigin, mainCamera.transform.forward, out hit))
         {
+            Debug.Log(hit.collider.gameObject.name);
             if(hit.collider.gameObject.CompareTag("portalableSurface"))
             {
                 GameObject newPortal = Instantiate(thingToSpawn, hit.point,Quaternion.LookRotation(hit.normal));

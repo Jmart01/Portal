@@ -125,20 +125,16 @@ public class MovementComp : MonoBehaviour
         else
         {
             CaculateWalkingVelocity();
-            
             if (IsOnGround() == false)
             {
-                Debug.Log(IsOnGround());
                 Velocity.y += Gravity*GravityMulti*Time.deltaTime;
-                Debug.Log(Velocity.y);
             }
         }
 
-        CheckFloor();
-        FollowFloor();
+        //CheckFloor();
+        //FollowFloor();
         characterController.Move(Velocity * Time.deltaTime);
-
-        SnapShotPostionAndRotation();
+        //SnapShotPostionAndRotation();
     }
 
     void CalculateClimbingVelocity()

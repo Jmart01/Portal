@@ -26,6 +26,7 @@ public class DoorMoveComp : MonoBehaviour
 
     public void MoveTo(Transform Destination)
     {
+        Debug.Log("Should move");
         if (MovingCoroutine != null)
         {
             StopCoroutine(MovingCoroutine);
@@ -36,6 +37,7 @@ public class DoorMoveComp : MonoBehaviour
 
     IEnumerator MoveToTrans(Transform Destination, float TransitionTime)
     {
+        Debug.Log($"{Destination},{transitionTime}");
         float timer = 0f;
         Vector3 originPos = ObjectToMove.position;
         Quaternion originRot = ObjectToMove.rotation;
