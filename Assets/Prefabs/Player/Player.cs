@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
         _inputActions.Gameplay.SpawnPortalB.performed += SpawnPortalB;
         _inputActions.Gameplay.Interact.performed += Interact;
         Cursor.visible = false;
+        Cursor.lockState =  CursorLockMode.Locked;
     }
 
     private void SpawnPortalA(InputAction.CallbackContext obj)
